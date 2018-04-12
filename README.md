@@ -152,7 +152,7 @@ here are 4 callback in PPAPIListener：onStart、onFinish、onSuccess、onFail.
 
 those will run on UI thread, so we can write the UI command we want.
 
-you see ,wo set api.keyword，and int onSuccess get api.books, just like use a java bean class.
+we set api.keyword，and get api.books in onSuccess, just like use a java bean class.
 
 Book is a simple bean:
 ```
