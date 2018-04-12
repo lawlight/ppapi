@@ -76,4 +76,9 @@ public interface IPPAPI {
      */
     void doDelete(PPAPIListener listener);
 
+    /**
+     * clear cache
+     */
+    void clearCache();
+
 }

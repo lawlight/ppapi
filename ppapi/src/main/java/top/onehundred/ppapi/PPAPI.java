@@ -202,6 +202,12 @@ public abstract class PPAPI implements IPPAPI {
         doConnect(listener, "DELETE");
     }
 
+    @Override
+    public void clearCache() {
+        ACache aCache = ACache.get(getContext());
+        aCache.remove(this.getClass().getName());
+    }
+
     /**
      * do request!
      *
