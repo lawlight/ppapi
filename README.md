@@ -13,7 +13,7 @@ allprojects {
 Step 2. Add the dependency
 ```
 dependencies {
-    compile 'com.github.lawlight:ppapi:0.1.0'
+    compile 'com.github.lawlight:ppapi:0.1.1'
 }
 ```
 #make you api class extends PPAPI
