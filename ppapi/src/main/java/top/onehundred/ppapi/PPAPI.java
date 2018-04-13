@@ -183,22 +183,22 @@ public abstract class PPAPI implements IPPAPI {
     }
 
     @Override
-    final public void doGet(PPAPIListener listener) {
+    public void doGet(PPAPIListener listener) {
         doConnect(listener, "GET");
     }
 
     @Override
-    final public void doPost(PPAPIListener listener) {
+    public void doPost(PPAPIListener listener) {
         doConnect(listener, "POST");
     }
 
     @Override
-    final public void doPut(PPAPIListener listener) {
+    public void doPut(PPAPIListener listener) {
         doConnect(listener, "PUT");
     }
 
     @Override
-    final public void doDelete(PPAPIListener listener) {
+    public void doDelete(PPAPIListener listener) {
         doConnect(listener, "DELETE");
     }
 
@@ -455,7 +455,7 @@ public abstract class PPAPI implements IPPAPI {
      * callback methods
      */
 
-    final private void onStart() {
+    protected void onStart() {
         log("PPAPI start call At (" + getClass().getSimpleName() + ".java:0)");
         //generate new call tag;
         callTag = new Date().getTime();
@@ -475,13 +475,13 @@ public abstract class PPAPI implements IPPAPI {
 
     }
 
-    final private void onSuccess(String result) {
+    protected void onSuccess(String result) {
         if (!isCancel && mListener != null) {
             callHandler.obtainMessage(101, result).sendToTarget();
         }
     }
 
-    final protected void onFail(int errCode, String errMessage) {
+    protected void onFail(int errCode, String errMessage) {
         if (!isCancel && mListener != null) {
             callHandler.obtainMessage(102, errCode, 0, errMessage).sendToTarget();
             isCancel = true;
