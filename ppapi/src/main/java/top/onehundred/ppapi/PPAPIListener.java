@@ -8,7 +8,7 @@ package top.onehundred.ppapi;
 public interface PPAPIListener {
 
     /**
-     * onstart
+     * onStart
      */
     void onStart();
 

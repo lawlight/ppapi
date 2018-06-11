@@ -18,6 +18,8 @@ import com.squareup.okhttp.Response;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.security.cert.CertificateFactory;
@@ -52,6 +54,8 @@ public abstract class PPAPI implements IPPAPI {
         if (mOkHttpClient == null) {
             mOkHttpClient = new OkHttpClient();
             mOkHttpClient.setConnectTimeout(timeout, TimeUnit.SECONDS);
+
+            mOkHttpClient.setCookieHandler(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
         }
     }
 
