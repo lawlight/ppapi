@@ -54,7 +54,7 @@ public abstract class PPAPI implements IPPAPI {
         if (mOkHttpClient == null) {
             mOkHttpClient = new OkHttpClient();
             mOkHttpClient.setConnectTimeout(timeout, TimeUnit.SECONDS);
-
+            //set cookie enable
             mOkHttpClient.setCookieHandler(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
         }
     }
@@ -114,6 +114,9 @@ public abstract class PPAPI implements IPPAPI {
     private HashMap<String, Object> mParams = new HashMap<>();
     private HashMap<String, String> mHeaders = new HashMap<>();
 
+    //raw data
+    private String raw = null;
+
     /**
      * use putParam or putHeader to put your api params here.<br />
      * you can override this method in your basic PPAPI class to put common param.
@@ -141,6 +144,10 @@ public abstract class PPAPI implements IPPAPI {
      */
     final protected void putHeader(String key, String value) {
         mHeaders.put(key, value);
+    }
+
+    final protected void putRaw(String raw){
+        this.raw = raw;
     }
 
     /**
@@ -286,13 +293,17 @@ public abstract class PPAPI implements IPPAPI {
         String url = getHostname() + getUrl();
         log(mode + "->" + url);
         RequestBody requestBody;
-        if (isMultipartForm) {
-            //file mode
-            log("multipart form data, upload file.");
-            requestBody = getMultipartRequestBody();
-        } else {
-            //normal mode
-            requestBody = getRequestBody();
+        if(raw != null){
+            requestBody = getJSONRequestBody();
+        }else{
+            if (isMultipartForm) {
+                //file mode
+                log("multipart form data, upload file.");
+                requestBody = getMultipartRequestBody();
+            } else {
+                //normal mode
+                requestBody = getRequestBody();
+            }
         }
 
         //build request
@@ -408,6 +419,16 @@ public abstract class PPAPI implements IPPAPI {
             log(key + ":" + val.toString());
         }
         return multipartBuilder.build();
+    }
+
+    /**
+     * get raw json request body.
+     * @return
+     */
+    private RequestBody getJSONRequestBody() {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, raw);
+        return body;
     }
 
     /**
